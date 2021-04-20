@@ -1,0 +1,16 @@
+.card {
+      padding: 50px;
+      width: 15rem;
+
+  }
+  
+ .card-text {
+     align-content: center;
+ }
+ h2{
+     text-align: center;
+ }
+
+ h3{
+     font-size: 15px;
+ }

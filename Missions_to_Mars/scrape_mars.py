@@ -48,7 +48,7 @@ def scrape():
     facts_df = mars_facts_table[0]
     fact_df = facts_df.rename(columns={0:"Description", 1:"Mars", 2:"Earth"})
     mars_fact_df= fact_df.set_index("Description")
-    mars_fact_html_table = mars_fact_df.to_html('Mars_fact_table')
+    #mars_fact_html_table = mars_fact_df.to_html('Mars_fact_table')
 
     html_string = """
     <html>
@@ -102,3 +102,4 @@ def scrape():
                     }
 
     return (mars_info_dict)
+
