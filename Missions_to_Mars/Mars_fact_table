@@ -1,12 +1,4 @@
-
-    <html>
-    <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    </head>
-    
-    <body>
-        <table border="1" class="dataframe table table-hover table-striped table-responsive" id="Mars_fact_table">
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -32,8 +24,8 @@
     </tr>
     <tr>
       <th>Mass:</th>
-      <td>6.39 × 10^23 kg</td>
-      <td>5.97 × 10^24 kg</td>
+      <td>6.39 Ã— 10^23 kg</td>
+      <td>5.97 Ã— 10^24 kg</td>
     </tr>
     <tr>
       <th>Moons:</th>
@@ -52,11 +44,8 @@
     </tr>
     <tr>
       <th>Temperature:</th>
-      <td>-87 to -5 °C</td>
-      <td>-88 to 58°C</td>
+      <td>-87 to -5 Â°C</td>
+      <td>-88 to 58Â°C</td>
     </tr>
   </tbody>
 </table>
-    </body>
-    </html>
-    

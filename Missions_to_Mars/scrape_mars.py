@@ -25,6 +25,80 @@ def scrape():
 
     browser.quit()
 
-    return (news_title,news_p)
+    # The image url for the current Featured Mars Image is scraped from the Featured Space Image site here and assigned the url string
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=False)
 
-scrape()
+    img_url = "https://spaceimages-mars.com"
+    browser.visit(img_url)
+    img_html = browser.html
+    soup = bs(img_html, "html.parser")
+
+    image_url = soup.find('img', class_='headerimage fade-in' )["src"]
+    print(image_url)
+
+    featured_image_url = f'{img_url}/{image_url}'
+    print(featured_image_url)
+
+    browser.quit()
+
+    #From the Mars Facts webpage here, the table containing facts about the planet is scraped using pandas.
+    fact_url = 'https://galaxyfacts-mars.com'
+    mars_facts_table = pd.read_html(fact_url)
+    facts_df = mars_facts_table[0]
+    fact_df = facts_df.rename(columns={0:"Description", 1:"Mars", 2:"Earth"})
+    mars_fact_df= fact_df.set_index("Description")
+    mars_fact_html_table = mars_fact_df.to_html('Mars_fact_table')
+
+    html_string = """
+    <html>
+    <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    </head>
+    
+    <body>
+        {mars_fact_html_table}
+    </body>
+    </html>
+    """
+
+    htmlfile = "Mars_fact_table.html"
+    with open(htmlfile, "w") as file_out:
+        file_out.write(html_string.format(mars_fact_html_table=mars_fact_df.to_html\
+                                      (classes="table table-hover table-striped table-responsive", \
+                                       border=1,index=True,table_id='Mars_fact_table')))
+
+    #From the astrogeology site [here](https://marshemispheres.com/) to obtain high resolution images for each of Mar's hemispheres
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=False)
+
+    hemisphere_url = 'https://marshemispheres.com/'
+    browser.visit(hemisphere_url)   
+
+    hemisphere_html = browser.html
+    # Parse HTML with Beautiful Soup
+    soup = bs(hemisphere_html, 'html.parser')
+    # Retrieve all elements that contain mars hemisphere information
+    items = soup.find_all('div', class_='item')
+
+    hemisphere_image_urls = []
+
+    for item in items:
+        title = item.find('h3').text
+        mars_img_url = item.find('img',class_='thumb')['src']
+        full_mars_img_url = f'{hemisphere_url}{mars_img_url}'
+        hemisphere_image_urls.append({"title":title,"img_url":full_mars_img_url})
+
+    hemisphere_image_urls
+
+    browser.quit()
+
+    mars_info_dict = {"News_Title":news_title,
+                    "News_P":news_p,
+                    "Featured_Image":featured_image_url,
+                    "Mars_fact":htmlfile,
+                    "Mars_hemisphere":hemisphere_image_urls
+                    }
+
+    return (mars_info_dict)
