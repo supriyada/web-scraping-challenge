@@ -8,9 +8,13 @@
      align-content: center;
  }
  h2{
-     text-align: center;
+     text-align: left;
  }
 
  h3{
      font-size: 15px;
+ }
+
+ .jumbotron {
+     height: 50px;
  }

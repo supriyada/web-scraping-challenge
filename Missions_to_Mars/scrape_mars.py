@@ -48,26 +48,11 @@ def scrape():
     facts_df = mars_facts_table[0]
     fact_df = facts_df.rename(columns={0:"Description", 1:"Mars", 2:"Earth"})
     mars_fact_df= fact_df.set_index("Description")
-    #mars_fact_html_table = mars_fact_df.to_html('Mars_fact_table')
+    mars_fact_html_table = mars_fact_df.to_html(classes="table table-hover table-striped table-responsive", \
+                                       border=1,index=True,table_id='Mars_fact_table')
 
-    html_string = """
-    <html>
-    <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    </head>
+    #mars_dict = mars_fact_df.to_dict()
     
-    <body>
-        {mars_fact_html_table}
-    </body>
-    </html>
-    """
-
-    htmlfile = "Mars_fact_table.html"
-    with open(htmlfile, "w") as file_out:
-        file_out.write(html_string.format(mars_fact_html_table=mars_fact_df.to_html\
-                                      (classes="table table-hover table-striped table-responsive", \
-                                       border=1,index=True,table_id='Mars_fact_table')))
 
     #From the astrogeology site [here](https://marshemispheres.com/) to obtain high resolution images for each of Mar's hemispheres
     executable_path = {'executable_path': ChromeDriverManager().install()}
@@ -97,7 +82,7 @@ def scrape():
     mars_info_dict = {"News_Title":news_title,
                     "News_P":news_p,
                     "Featured_Image":featured_image_url,
-                    "Mars_fact":htmlfile,
+                    "Mars_fact":mars_fact_html_table,
                     "Mars_hemisphere":hemisphere_image_urls
                     }
 

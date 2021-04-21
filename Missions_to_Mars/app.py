@@ -18,7 +18,7 @@ def scrape_home():
 def mars_scrape():
     mars_info_dict = scrape_mars.scrape()
 
-    mongo.db.collection.update({}, mars_info_dict, upsert=True)
+    mongo.db.collection.replace_one({}, mars_info_dict, True)
 
     return redirect ("/")
 
