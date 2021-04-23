@@ -25,7 +25,8 @@ def scrape():
 
     browser.quit()
 
-    # The image url for the current Featured Mars Image is scraped from the Featured Space Image site here and assigned the url string
+    # The image url for the current Featured Mars Image is scraped from the Featured Space Image site here and 
+    # assigned the url string
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
 
@@ -50,9 +51,7 @@ def scrape():
     mars_fact_df= fact_df.set_index("Description")
     mars_fact_html_table = mars_fact_df.to_html(classes="table table-hover table-striped table-responsive", \
                                        border=1,index=True,table_id='Mars_fact_table')
-
-    #mars_dict = mars_fact_df.to_dict()
-    
+  
 
     #From the astrogeology site [here](https://marshemispheres.com/) to obtain high resolution images for each of Mar's hemispheres
     executable_path = {'executable_path': ChromeDriverManager().install()}
@@ -87,4 +86,3 @@ def scrape():
                     }
 
     return (mars_info_dict)
-
