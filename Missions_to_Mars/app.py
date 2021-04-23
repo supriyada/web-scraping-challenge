@@ -7,6 +7,7 @@ app = Flask(__name__)
 #Connecting to Mongo DB and creating a database mars_app
 mongo = PyMongo(app, uri="mongodb://localhost:27017/mars_app")
 
+#Landing/home page
 @app.route("/")
 def scrape_home():
 
@@ -14,11 +15,12 @@ def scrape_home():
     
     return render_template("index.html", mars_info = mars_data)
 
-
+#Invokes the function to scrape the html pages for new data
 @app.route("/scrape")
 def mars_scrape():
     mars_info_dict = scrape_mars.scrape()
 
+    #Insert/updates one record in the mongodb
     mongo.db.collection.replace_one({}, mars_info_dict, True)
 
     return redirect ("/")
